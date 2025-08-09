@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "habyte",
-    "slug": "habyte",
+    "name": "habbit",
+    "slug": "habbit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "habyte",
+    "scheme": "habbit",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true, 
-      "bundleIdentifier": "com.ceej.habyte"
+      "bundleIdentifier": "com.ceej.habbit"
     },
     "android": {
       "adaptiveIcon": {
