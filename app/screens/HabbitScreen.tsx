@@ -2,6 +2,7 @@ import { Text, View, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
+import CreateHabbitForm from '../components/CreateHabbitForm';
 
 export default function HabbitScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,14 +30,15 @@ export default function HabbitScreen() {
             alignItems: 'center',
           }}
         >
-          <Text>Hello World!</Text>
+          <CreateHabbitForm />
+
           <Button
             mode='contained'
-             textColor='#F9F4EC'
-        buttonColor='#88C7B2'
+            textColor='#F9F4EC'
+            buttonColor='#88C7B2'
             onPress={() => setModalVisible(!modalVisible)}
           >
-            <Text>Hide Modal</Text>
+            <Text>cancel</Text>
           </Button>
         </View>
       </Modal>
@@ -55,13 +57,13 @@ export default function HabbitScreen() {
       </Text>
       <Button
         textColor='#F9F4EC'
-        labelStyle={{fontFamily: 'Nunito'}}
+        labelStyle={{ fontFamily: 'Nunito' }}
         buttonColor='#88C7B2'
         mode='elevated'
         icon={({ size, color }) => (
           <MaterialCommunityIcons name='rabbit' size={size} color={color} />
         )}
-        contentStyle={{ flexDirection: 'row-reverse'}}
+        contentStyle={{ flexDirection: 'row-reverse' }}
         onPress={() => setModalVisible(true)}
       >
         create a new habbit
