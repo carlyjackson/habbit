@@ -11,7 +11,7 @@ export default function HomeScreen() {
       }}
     >
       <Image
-        source={require('../assets/images/habbit_logo.png')}
+        source={require('../../assets/images/habbit_logo.png')}
         style={{
           width: 200,
           height: 200,
