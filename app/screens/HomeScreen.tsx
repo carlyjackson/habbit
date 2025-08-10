@@ -15,7 +15,7 @@ export default function HomeScreen() {
         style={{
           width: 200,
           height: 200,
-          marginBottom: 20,
+          marginBottom: 10,
           borderRadius: 100,
         }}
       />
@@ -24,33 +24,33 @@ export default function HomeScreen() {
           fontFamily: 'Nunito',
           color: '#B892C4',
           fontWeight: 'bold',
-          fontSize: 20,
-          margin: 20,
+          fontSize: 26,
+          marginTop: 28,
+          marginBottom: 30,
         }}
       >
-        Welcome to habbit!
+        welcome to habbit!
       </Text>
       <Text
         style={{
           fontFamily: 'Nunito',
           color: '#88C7B2',
           fontWeight: 'bold',
-          fontSize: 13,
-          marginBottom: 20,
+          fontSize: 15,
+          marginBottom: 30,
         }}
       >
-        Let&apos;s start your habit tracking journey. 🥕
+        let&apos;s start your habit tracking journey 🥕
       </Text>
       <Text
         style={{
           fontFamily: 'Nunito',
           color: '#F6A98D',
           fontWeight: 'bold',
-          fontSize: 13,
-          marginBottom: 20,
+          fontSize: 15,
         }}
       >
-        Hop down to the tabs below to explore the app!
+        hop down to the tabs below to explore the app!
       </Text>
     </View>
   );

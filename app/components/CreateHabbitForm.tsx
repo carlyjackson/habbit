@@ -50,7 +50,7 @@ export default function CreateHabbitForm() {
 
   return (
     <View style={{ flex: 0, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>🐰 What daily habbit would you like to track? 🥕</Text>
+      <Text>🐰 what daily habbit would you like to track? 🥕</Text>
       <Controller
         control={control}
         rules={{
@@ -72,7 +72,7 @@ export default function CreateHabbitForm() {
       {errors.habbitName && <Text>Habit name is required.</Text>}
 
       <Text>
-        Describe this habbit in more detail, if that&apos;s helpful for you!
+        describe this habbit in more detail, if that&apos;s helpful for you!
       </Text>
       <Controller
         control={control}
@@ -92,7 +92,7 @@ export default function CreateHabbitForm() {
         )}
         name='habbitDescription'
       />
-      <Text>What category does this habbit belong to?</Text>
+      <Text>what category does this habbit belong to?</Text>
       <Controller
         control={control}
         rules={{

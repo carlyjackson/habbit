@@ -24,36 +24,36 @@ export default function App() {
     <View style={{ flex: 1 }}>
       <Tab.Navigator>
         <Tab.Screen
-          name='Home'
+          name='home'
           component={HomeScreen}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'home',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <Ionicons name='home' color={color} size={size} />
             ),
             tabBarActiveTintColor: '#F6A98D',
           }}
         />
         <Tab.Screen
-          name='Habbits'
+          name='habbits'
           component={HabbitScreen}
           options={{
-            tabBarLabel: 'Habbits',
+            tabBarLabel: 'habbits',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <MaterialCommunityIcons name='rabbit' size={size} color={color} />
             ),
             tabBarActiveTintColor: '#88C7B2',
           }}
         />
         <Tab.Screen
-          name='Chat'
+          name='chat'
           component={ChatScreen}
           options={{
-            tabBarLabel: 'Chat',
+            tabBarLabel: 'chat',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <Ionicons name='chatbubbles-outline' size={size} color={color} />
             ),
             tabBarActiveTintColor: '#F5DA8C',
@@ -61,24 +61,24 @@ export default function App() {
         />
 
         <Tab.Screen
-          name='Tracking'
+          name='tracking'
           component={TrackingScreen}
           options={{
-            tabBarLabel: 'Tracking',
+            tabBarLabel: 'tracking',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <FontAwesome6 name='carrot' size={size} color={color} />
             ),
             tabBarActiveTintColor: '#EB6A55',
           }}
         />
         <Tab.Screen
-          name='Progress'
+          name='progress'
           component={ProgressScreen}
           options={{
-            tabBarLabel: 'Progress',
+            tabBarLabel: 'progress',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <Entypo name='line-graph' size={size} color={color} />
             ),
 
@@ -86,12 +86,12 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name='Settings'
+          name='settings'
           component={SettingsScreen}
           options={{
-            tabBarLabel: 'Settings',
+            tabBarLabel: 'settings',
             tabBarLabelStyle: { fontFamily: 'Nunito' },
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size }: { color: string; size: number }) => (
               <Feather name='settings' size={size} color={color} />
             ),
             tabBarActiveTintColor: '#F7B7B2',
