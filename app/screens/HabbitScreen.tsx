@@ -1,8 +1,10 @@
-import { Text, View } from 'react-native';
+import { Text, View, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
-import Entypo from '@expo/vector-icons/Entypo';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import React, { useState } from 'react';
 
 export default function HabbitScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View
       style={{
@@ -12,6 +14,32 @@ export default function HabbitScreen() {
         backgroundColor: '#F9F4EC',
       }}
     >
+      <Modal
+        animationType='slide'
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}
+        >
+          <Text>Hello World!</Text>
+          <Button
+            mode='contained'
+             textColor='#F9F4EC'
+        buttonColor='#88C7B2'
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text>Hide Modal</Text>
+          </Button>
+        </View>
+      </Modal>
       <Text
         style={{
           fontFamily: 'Nunito',
@@ -25,15 +53,16 @@ export default function HabbitScreen() {
       <Text style={{ fontFamily: 'Nunito', fontSize: 16, marginBottom: 20 }}>
         Here you can create and manage your habbits!
       </Text>
-      {/* button to create a new habbit */}
       <Button
         textColor='#F9F4EC'
+        labelStyle={{fontFamily: 'Nunito'}}
         buttonColor='#88C7B2'
         mode='elevated'
         icon={({ size, color }) => (
-          <Entypo name='add-to-list' size={size} color={color} style={{margin: 2}} />
+          <MaterialCommunityIcons name='rabbit' size={size} color={color} />
         )}
-        onPress={() => console.log('Pressed')}
+        contentStyle={{ flexDirection: 'row-reverse'}}
+        onPress={() => setModalVisible(true)}
       >
         create a new habbit
       </Button>

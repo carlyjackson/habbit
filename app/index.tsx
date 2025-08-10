@@ -36,7 +36,7 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name='Habits'
+          name='Habbits'
           component={HabbitScreen}
           options={{
             tabBarLabel: 'Habbits',
