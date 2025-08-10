@@ -30,7 +30,23 @@ export default function CreateHabbitForm() {
     { label: 'Other', value: 'other' },
   ]);
 
-  const onSubmit = (data: any) => console.log(data);
+    const onSubmit = (data: any) => {
+      console.log('Form data:', data);
+    fetch('http://localhost:3000/habbits', { // replace local host with server URL from AWS 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((data) => data.json())
+      .then((response) => {
+        console.log('Habbit created successfully:', response);
+      })
+      .catch((error) => {
+        console.error('Error creating habbit:', error);
+      });
+  };
 
   return (
     <View style={{ flex: 0, justifyContent: 'center', alignItems: 'center' }}>
