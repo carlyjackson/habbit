@@ -3,9 +3,13 @@ import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useState } from 'react';
 import CreateHabbitForm from '../components/CreateHabbitForm';
+import HabbitList from '../components/HabbitList';
 
 export default function HabbitScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleCloseModal = () => setModalVisible(false);
+
   return (
     <View
       style={{
@@ -30,7 +34,7 @@ export default function HabbitScreen() {
             alignItems: 'center',
           }}
         >
-          <CreateHabbitForm />
+          <CreateHabbitForm onClose={handleCloseModal} />
 
           <Button
             mode='contained'
@@ -68,7 +72,7 @@ export default function HabbitScreen() {
       >
         create a new habbit
       </Button>
-      {/* list of existing habbits */}
+      <HabbitList />
     </View>
   );
 }
