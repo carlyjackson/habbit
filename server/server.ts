@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import habbitRouter from './routers/habbitRouter';
 import chatRouter from './routers/chatRouter';
