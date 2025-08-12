@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
-  Text,
   FlatList,
+  Text,
   TextInput,
   Button,
   StyleSheet,
@@ -25,6 +25,8 @@ export default function ChatScreen() {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
+  const flatListRef = useRef<FlatList>(null);
+
   useEffect(() => {
     const fetchSession = async () => {
       try {
@@ -40,6 +42,13 @@ export default function ChatScreen() {
     };
     fetchSession();
   }, []);
+
+  // Auto-scroll when messages update
+  useEffect(() => {
+    if (flatListRef.current && messages.length > 0) {
+      flatListRef.current.scrollToEnd({ animated: true });
+    }
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -61,9 +70,8 @@ export default function ChatScreen() {
           { role: 'assistant', content: data.reply },
         ]);
       } else if (data.redirectToHabbitsList) {
-        navigation.navigate("habbits");
+        navigation.navigate('habbits');
       }
-
     } catch (error) {
       console.error('Error sending message:', error);
     } finally {
@@ -74,6 +82,7 @@ export default function ChatScreen() {
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={messages}
         keyExtractor={(_, i) => i.toString()}
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}
