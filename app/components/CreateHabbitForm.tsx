@@ -5,7 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import React, { useState } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-export default function CreateHabbitForm() {
+export default function CreateHabbitForm({ onClose }: { onClose: () => void }) {
   const {
     control,
     handleSubmit,
@@ -21,18 +21,18 @@ export default function CreateHabbitForm() {
   const [value, setValue] = useState(null);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Physical Health', value: 'physicalHealth' },
-    { label: 'Finance', value: 'finance' },
-    { label: 'Nutrition', value: 'nutrition' },
-    { label: 'Social', value: 'social' },
-    { label: 'Mental Health', value: 'mentalHealth' },
-    { label: 'Hobbies', value: 'hobbies' },
-    { label: 'Other', value: 'other' },
+    { label: 'Physical Health', value: 'Physical Health' },
+    { label: 'Finance', value: 'Finance' },
+    { label: 'Nutrition', value: 'Nutrition' },
+    { label: 'Social', value: 'Social' },
+    { label: 'Mental Health', value: 'Mental Health' },
+    { label: 'Hobbies', value: 'Hobbies' },
+    { label: 'Other', value: 'Other' },
   ]);
 
-    const onSubmit = (data: any) => {
-      console.log('Form data:', data);
-    fetch('http://localhost:3000/habbits', { // replace local host with server URL from AWS 
+  const onSubmit = (data: any) => {
+    fetch('http://localhost:3000/habbits', {
+      // replace local host with server URL from AWS
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,6 +46,8 @@ export default function CreateHabbitForm() {
       .catch((error) => {
         console.error('Error creating habbit:', error);
       });
+
+    onClose(); // closes the modal
   };
 
   return (
