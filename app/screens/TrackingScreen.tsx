@@ -57,7 +57,7 @@ export default function TrackingScreen() {
       try {
         const res = await fetch('http://localhost:3000/habbits');
         const data = await res.json();
-        setHabbits(data.habbits);
+        setHabbits(data.habbits.sort((a: Habbit, b: Habbit) => a.id - b.id));
       } catch (e) {
         console.error('Error fetching habbits:', e);
       }

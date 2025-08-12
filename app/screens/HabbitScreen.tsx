@@ -24,7 +24,7 @@ export default function HabbitScreen() {
         try {
           const response = await fetch('http://localhost:3000/habbits');
           const data = await response.json();
-          setHabbits(data.habbits);
+          setHabbits(data.habbits.sort((a: Habbit, b: Habbit) => a.id - b.id));
         } catch (error) {
           console.error('Error fetching habbits:', error);
         }
