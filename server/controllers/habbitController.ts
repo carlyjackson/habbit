@@ -7,7 +7,8 @@ const habbitController = {
         try {
             const habbitData = req.body;
             console.log("Creating habbit with data:", habbitData);
-            // Here you would typically call a method from habbitModel to save the data
+            
+            // call a method from habbitModel to save the data
             const allHabbits = await habbitModel.query('SELECT * FROM habbits'); 
             console.log("All habbits:", allHabbits.rows);
             return res.status(201).json({ message: "Habbit created successfully!" });
@@ -19,7 +20,7 @@ const habbitController = {
 
     getHabbits: async (req: Request, res: Response) => {
         try {
-            // Here you would typically fetch data from the database
+            // fetch data from the database
             // const habbits = await habbitModel.getAll();
             return res.status(200).json({ message: "List of habbits" });
         } catch (error) {
@@ -32,7 +33,7 @@ const habbitController = {
         const { id } = req.params;
         const updatedData = req.body;
         console.log(`Updating habbit with id: ${id}`, updatedData);
-        // Here you would typically call a method from habbitModel to update the data
+        // call a method from habbitModel to update the data
         // await habbitModel.update(id, updatedData);
         return res.status(200).json({ message: `Habbit with id ${id} updated!` });
     },
@@ -40,7 +41,7 @@ const habbitController = {
     deleteHabbit: async (req: Request, res: Response) => {
         const { id } = req.params;
         console.log(`Deleting habbit with id: ${id}`);
-        // Here you would typically call a method from habbitModel to delete the data
+        // call a method from habbitModel to delete the data
         // await habbitModel.delete(id);
         return res.status(200).json({ message: `Habbit with id ${id} deleted!` });
     }
