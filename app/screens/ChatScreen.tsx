@@ -8,20 +8,26 @@ import {
   FlatList,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
+import { Button } from 'react-native-paper';
 
 type Message = {
   role: 'user' | 'assistant';
   content: string;
 };
 
+const defaultWelcomeMessage: Message = {
+  role: 'assistant',
+  content:
+    "Hi there! 🐰 I'm Bun, your friendly habit helper! Ready to track your habbits and earn some tasty carrots? 🥕 What shall we do today?",
+};
+
 export default function ChatScreen() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([defaultWelcomeMessage]);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
@@ -43,7 +49,6 @@ export default function ChatScreen() {
     fetchSession();
   }, []);
 
-  // Auto-scroll when messages update
   useEffect(() => {
     if (flatListRef.current && messages.length > 0) {
       flatListRef.current.scrollToEnd({ animated: true });
@@ -54,7 +59,7 @@ export default function ChatScreen() {
     if (!input.trim()) return;
 
     setMessages((prev) => [...prev, { role: 'user', content: input }]);
-    setInput(''); // Clear input immediately
+    setInput('');
     setLoading(true);
 
     try {
@@ -93,13 +98,20 @@ export default function ChatScreen() {
               item.role === 'user' ? styles.user : styles.bot,
             ]}
           >
-            <Text>{item.content}</Text>
+            <Text
+              style={[
+                styles.messageText,
+                item.role === 'user' ? styles.userText : styles.botText,
+              ]}
+            >
+              {item.content}
+            </Text>
           </View>
         )}
       />
       {loading && (
         <View style={{ padding: 10 }}>
-          <ActivityIndicator size='small' color='#555' />
+          <ActivityIndicator size='small' color='#EB6A55' />
         </View>
       )}
 
@@ -109,26 +121,93 @@ export default function ChatScreen() {
           value={input}
           onChangeText={setInput}
           placeholder='Type a message...'
-          editable={!loading} // disable input when loading
+          placeholderTextColor='#B892C4'
+          editable={!loading}
         />
-        <Button title='Send' onPress={sendMessage} disabled={loading} />
+        <Button
+          mode='contained'
+          onPress={sendMessage}
+          disabled={loading}
+          contentStyle={styles.sendButtonContent}
+          labelStyle={styles.sendButtonLabel}
+          buttonColor='#EB6A55'
+          style={styles.sendButton}
+          uppercase={false}
+          accessibilityLabel='Send message'
+        >
+          Send 🥕
+        </Button>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  message: { padding: 10, marginVertical: 4, borderRadius: 8, maxWidth: '80%' },
-  user: { backgroundColor: '#d1e7dd', alignSelf: 'flex-end' },
-  bot: { backgroundColor: '#F5DA8C', alignSelf: 'flex-start' },
-  inputRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8 },
+  container: { flex: 1, padding: 16, backgroundColor: '#F9F4EC' },
+  message: {
+    padding: 14,
+    marginVertical: 6,
+    borderRadius: 20,
+    maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  user: {
+    backgroundColor: '#F7B7B2', 
+    alignSelf: 'flex-end',
+  },
+  bot: {
+    backgroundColor: '#F5DA8C', 
+    alignSelf: 'flex-start',
+  },
+  messageText: {
+    fontSize: 16,
+  },
+  userText: {
+    color: '#EB6A55', 
+    fontWeight: 'bold',
+  },
+  botText: {
+    color: '#88C7B2', 
+  },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderColor: '#B892C4', 
+    backgroundColor: '#F9F4EC', 
+  },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 8,
+    borderColor: '#B892C4', 
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     marginRight: 8,
+    backgroundColor: '#FFF',
+    fontSize: 16,
+    color: '#333',
+  },
+  sendButton: {
+    borderRadius: 25,
+    shadowColor: '#EB6A55',
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  sendButtonContent: {
+    flexDirection: 'row-reverse',
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+  },
+  sendButtonLabel: {
+    fontFamily: 'Nunito',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#FFF',
   },
 });
