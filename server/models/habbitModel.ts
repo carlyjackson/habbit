@@ -75,5 +75,11 @@ export async function deleteHabbit(name: string) {
   return result.rows[0];
 }
 
+// get all habbits 
+export async function getAllHabbits() {
+  const query = `SELECT * FROM habbits;`;
+  const result = await pool.query(query);
+  return result.rows;
+}
 
 export default pool;
