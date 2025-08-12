@@ -22,7 +22,6 @@ export default function HabbitScreen() {
   
   const fetchHabbits = async () => {
         try {
-          // Replace localhost with your local IP if testing on device/emulator
           const response = await fetch('http://localhost:3000/habbits');
           const data = await response.json();
           setHabbits(data.habbits);
@@ -45,7 +44,7 @@ export default function HabbitScreen() {
         style={{
           fontFamily: 'Nunito_700Bold',
           fontSize: 28,
-          color: '#556B2F', // olive green for a natural feel
+          color: '#556B2F', 
           marginBottom: 12,
         }}
       >
@@ -56,7 +55,7 @@ export default function HabbitScreen() {
         style={{
           fontFamily: 'Nunito_400Regular',
           fontSize: 16,
-          color: '#6B8E23', // softer green
+          color: '#6B8E23',
           marginBottom: 24,
         }}
       >
@@ -66,7 +65,7 @@ export default function HabbitScreen() {
       <Button
         textColor='#F9F4EC'
         labelStyle={{ fontFamily: 'Nunito_700Bold', fontSize: 14 }}
-        buttonColor='#88C7B2' // pastel green-blue
+        buttonColor='#88C7B2' 
         mode='elevated'
         icon={({ size, color }) => (
           <MaterialCommunityIcons name='rabbit' size={size} color={color} />
