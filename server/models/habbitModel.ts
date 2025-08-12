@@ -46,4 +46,34 @@ pool.query(
   }
 );
 
+// === Habbit operations ===
+
+// Create a habbit
+export async function createHabbit({
+  name,
+  description,
+  category,
+}: {
+  name: string;
+  description?: string;
+  category: string;
+}) {
+  const query = `
+    INSERT INTO habbits (name, description, category)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+  `;
+  const values = [name, description || null, category];
+  const result = await pool.query(query, values);
+  return result.rows[0];
+}
+
+// Delete a habbit
+export async function deleteHabbit(name: string) {
+  const query = `DELETE FROM habbits WHERE name = $1 RETURNING *;`;
+  const result = await pool.query(query, [name]);
+  return result.rows[0];
+}
+
+
 export default pool;
