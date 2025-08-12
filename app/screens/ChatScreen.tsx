@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigation } from "@react-navigation/native";
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -17,11 +18,12 @@ type Message = {
   content: string;
 };
 
-export default function Chat() {
+export default function ChatScreen() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -58,7 +60,10 @@ export default function Chat() {
           ...prev,
           { role: 'assistant', content: data.reply },
         ]);
+      } else if (data.redirectToHabbitsList) {
+        navigation.navigate("habbits");
       }
+
     } catch (error) {
       console.error('Error sending message:', error);
     } finally {
