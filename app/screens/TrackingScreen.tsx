@@ -13,12 +13,44 @@ interface Habbit {
 export default function TrackingScreen() {
   const [habbits, setHabbits] = useState<Habbit[]>([]);
   const [completed, setCompleted] = useState<Record<number, boolean>>({});
-  const bounceAnim = useRef(new Animated.Value(1)).current;
+  const carrotBounce = useRef(new Animated.Value(1)).current;
+  const datePulse = useRef(new Animated.Value(1)).current;
 
   const [fontsLoaded] = useFonts({
     Nunito_700Bold,
     Nunito_400Regular,
   });
+
+  // Animate date text pulse infinitely
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(datePulse, {
+          toValue: 1.1,
+          duration: 1200,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+        Animated.timing(datePulse, {
+          toValue: 1,
+          duration: 1200,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [datePulse]);
+
+  // Get formatted date string
+  const getFormattedDate = () => {
+    const now = new Date();
+    return now.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
 
   useEffect(() => {
     const fetchHabbits = async () => {
@@ -37,15 +69,15 @@ export default function TrackingScreen() {
 
   // Bounce animation when carrot count changes
   const animateCarrots = () => {
-    bounceAnim.setValue(1);
+    carrotBounce.setValue(1);
     Animated.sequence([
-      Animated.timing(bounceAnim, {
+      Animated.timing(carrotBounce, {
         toValue: 1.4,
         duration: 200,
         easing: Easing.bounce,
         useNativeDriver: true,
       }),
-      Animated.timing(bounceAnim, {
+      Animated.timing(carrotBounce, {
         toValue: 1,
         duration: 200,
         easing: Easing.ease,
@@ -99,7 +131,14 @@ export default function TrackingScreen() {
 
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.carrotCount, { transform: [{ scale: bounceAnim }] }]}>
+      <Animated.Text
+        style={[styles.dateText, { transform: [{ scale: datePulse }] }]}
+        accessible={true}
+        accessibilityRole="header"
+      >
+        Your daily carrots for {getFormattedDate()} ✨
+      </Animated.Text>
+      <Animated.Text style={[styles.carrotCount, { transform: [{ scale: carrotBounce }] }]}>
         🥕 x {carrotCount}
       </Animated.Text>
       <Text style={styles.title}>🐰 Your Habbits Tracker 🥕</Text>
@@ -117,14 +156,22 @@ export default function TrackingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFAF0', // soft cream
+    backgroundColor: '#FFFAF0',
     paddingHorizontal: 20,
     paddingTop: 30,
+  },
+  dateText: {
+    fontFamily: 'Nunito_700Bold',
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#6A994E', 
+    letterSpacing: 1,
   },
   carrotCount: {
     fontSize: 30,
     fontFamily: 'Nunito_700Bold',
-    color: '#FF9F1C', // carrot orange
+    color: '#FF9F1C', 
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -133,12 +180,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     marginBottom: 20,
-    color: '#2E4057', // dark blue-gray
+    color: '#2E4057', 
   },
   habbitContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFEEDB', // light peach
+    backgroundColor: '#FFEEDB', 
     borderRadius: 15,
     padding: 15,
     marginBottom: 15,
@@ -159,7 +206,7 @@ const styles = StyleSheet.create({
     color: '#3B3A3A',
   },
   carrotEmoji: {
-    textDecorationLine: 'none', // ensure carrot emoji not struck through
+    textDecorationLine: 'none',
   },
   habbitDescription: {
     fontFamily: 'Nunito_400Regular',
@@ -175,7 +222,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   completedHabbit: {
-    backgroundColor: '#D6F6E1', // minty green
+    backgroundColor: '#D6F6E1', 
   },
   completedText: {
     textDecorationLine: 'line-through',
