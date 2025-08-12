@@ -1,84 +1,130 @@
 import { Text, View, Modal } from 'react-native';
 import { Button } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateHabbitForm from '../components/CreateHabbitForm';
 import HabbitList from '../components/HabbitList';
 
+interface Habbit {
+  id: number;
+  name: string;
+  description?: string;
+  category: string;
+}
+
 export default function HabbitScreen() {
   const [modalVisible, setModalVisible] = useState(false);
+   const [habbits, setHabbits] = useState<Habbit[]>([]);
 
-  const handleCloseModal = () => setModalVisible(false);
-
+    useEffect(() => {
+      fetchHabbits();
+    }, []);
+  
+  const fetchHabbits = async () => {
+        try {
+          // Replace localhost with your local IP if testing on device/emulator
+          const response = await fetch('http://localhost:3000/habbits');
+          const data = await response.json();
+          setHabbits(data.habbits);
+        } catch (error) {
+          console.error('Error fetching habbits:', error);
+        }
+      };
+  
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F9F4EC',
+        paddingHorizontal: 24,
+        paddingTop: 48,
+        paddingBottom: 16,
       }}
     >
-      <Modal
-        animationType='slide'
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-          }}
-        >
-          <CreateHabbitForm onClose={handleCloseModal} />
-
-          <Button
-            mode='contained'
-            textColor='#F9F4EC'
-            buttonColor='#88C7B2'
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text>cancel</Text>
-          </Button>
-        </View>
-      </Modal>
       <Text
         style={{
-          fontFamily: 'Nunito',
-          fontWeight: 'bold',
-          fontSize: 24,
-          marginBottom: 20,
+          fontFamily: 'Nunito_700Bold',
+          fontSize: 28,
+          color: '#556B2F', // olive green for a natural feel
+          marginBottom: 12,
         }}
       >
-        Habbit Setup Screen
+        Habbit Setup 🐰🥕
       </Text>
-      <Text style={{ fontFamily: 'Nunito', fontSize: 16, marginBottom: 20 }}>
-        Here you can create and manage your habbits!
+
+      <Text
+        style={{
+          fontFamily: 'Nunito_400Regular',
+          fontSize: 16,
+          color: '#6B8E23', // softer green
+          marginBottom: 24,
+        }}
+      >
+        Create and manage your habbits with Bun’s help!
       </Text>
+
       <Button
         textColor='#F9F4EC'
-        labelStyle={{ fontFamily: 'Nunito' }}
-        buttonColor='#88C7B2'
+        labelStyle={{ fontFamily: 'Nunito_700Bold', fontSize: 14 }}
+        buttonColor='#88C7B2' // pastel green-blue
         mode='elevated'
         icon={({ size, color }) => (
           <MaterialCommunityIcons name='rabbit' size={size} color={color} />
         )}
         contentStyle={{ flexDirection: 'row-reverse' }}
         onPress={() => setModalVisible(true)}
+        style={{ marginBottom: 24 }}
       >
-        create a new habbit
+        Create a new habbit
       </Button>
-      <HabbitList />
+
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#fff',
+          borderRadius: 16,
+          padding: 16,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+          elevation: 3,
+        }}
+      >
+        <HabbitList habbits={habbits} setHabbits={setHabbits} />
+      </View>
+
+      <Modal
+        animationType='slide'
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            backgroundColor: '#F9F4EC',
+            padding: 24,
+          }}
+        >
+          <CreateHabbitForm onClose={() => {
+          fetchHabbits(); // refetch after create to update list
+          setModalVisible(false);
+        }} />
+
+          <Button
+            mode='contained'
+            textColor='#F9F4EC'
+            buttonColor='#88C7B2'
+            onPress={() => setModalVisible(false)}
+            style={{ marginTop: 16 }}
+          >
+            Cancel
+          </Button>
+        </View>
+      </Modal>
     </View>
   );
 }
-// goal is to create a screen where users can set up their habbits
-// this will include a form to input a label for the habbit, a description, and a frequency/time for the habit
-// the form will be submitted and the habit will be saved to a database with the help of a GraphQL mutation
-// the user can click a button to create a new habbit, which will open a modal with the form
-// the user can also view their existing habbits in a list, and click on a habbit to view its details
-// the user can also edit or delete a habbit from the list
