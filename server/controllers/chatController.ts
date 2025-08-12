@@ -17,6 +17,7 @@ const systemMessage: ChatCompletionMessageParam = {
 };
 
 const conversations: Record<string, ChatCompletionMessageParam[]> = {};
+const sessionEnded: Record<string, boolean> = {};
 
 const chatController = {
   sendMessage: async (req: Request, res: Response) => {
@@ -38,7 +39,7 @@ const chatController = {
 
       const completion = await openai.chat.completions.create({
         model: 'gpt-5-nano',
-        messages: conversations[sessionId],
+        messages: conversations[sessionId], 
       });
 
       const assistantReply = completion.choices[0].message?.content || '';

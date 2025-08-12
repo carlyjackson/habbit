@@ -1,16 +1,19 @@
 import { Request, Response } from 'express';
 
-import habbitModel from '../models/habbitModel';
+import {createHabbit, getAllHabbits} from '../models/habbitModel';
 
 const habbitController = {
     createHabbit: async (req: Request, res: Response) => {
         try {
-            const habbitData = req.body;
-            console.log("Creating habbit with data:", habbitData);
-            
+            const {habbitName, habbitDescription, habbitCategory} = req.body;
+
             // call a method from habbitModel to save the data
-            const allHabbits = await habbitModel.query('SELECT * FROM habbits'); 
-            console.log("All habbits:", allHabbits.rows);
+            const created = await createHabbit({
+                name: habbitName,
+                description: habbitDescription,
+                category: habbitCategory,
+            });
+            console.log("created entry", created);
             return res.status(201).json({ message: "Habbit created successfully!" });
         } catch (error) {
             console.error("Error creating habbit:", error);
@@ -21,8 +24,9 @@ const habbitController = {
     getHabbits: async (req: Request, res: Response) => {
         try {
             // fetch data from the database
-            // const habbits = await habbitModel.getAll();
-            return res.status(200).json({ message: "List of habbits" });
+            const habbits = await getAllHabbits();
+            console.log("all habbits fetched:", habbits);
+            return res.status(200).json({ habbits });
         } catch (error) {
             console.error("Error fetching habbits:", error);
             return res.status(500).json({ message: "Internal server error" });
