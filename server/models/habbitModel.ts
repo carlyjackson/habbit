@@ -69,9 +69,9 @@ export async function createHabbit({
 }
 
 // Delete a habbit
-export async function deleteHabbit(name: string) {
-  const query = `DELETE FROM habbits WHERE name = $1 RETURNING *;`;
-  const result = await pool.query(query, [name]);
+export async function deleteHabbit(id: string) {
+  const query = `DELETE FROM habbits WHERE id = $1 RETURNING *;`;
+  const result = await pool.query(query, [id]);
   return result.rows[0];
 }
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import {createHabbit, getAllHabbits} from '../models/habbitModel';
+import {createHabbit, getAllHabbits, deleteHabbit} from '../models/habbitModel';
 
 const habbitController = {
     createHabbit: async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ const habbitController = {
         const { id } = req.params;
         console.log(`Deleting habbit with id: ${id}`);
         // call a method from habbitModel to delete the data
-        // await habbitModel.delete(id);
+        await deleteHabbit(id);
         return res.status(200).json({ message: `Habbit with id ${id} deleted!` });
     }
 }

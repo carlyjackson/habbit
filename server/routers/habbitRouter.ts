@@ -18,11 +18,7 @@ habbitRouter.put(
     }
 );
 
-habbitRouter.delete('/:id', (req: Request, res: Response) => {
-    const { id } = req.params;
-    console.log(`Deleting habbit with id: ${id}`);
-    res.status(200).json({message: `Habbit with id ${id} deleted!`});
-}); 
+habbitRouter.delete('/:id', habbitController.deleteHabbit); 
 
 
 export default habbitRouter;
