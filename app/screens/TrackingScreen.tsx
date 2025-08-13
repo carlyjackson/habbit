@@ -87,17 +87,34 @@ export default function TrackingScreen() {
   };
 
   const toggleComplete = (id: number) => {
-    setCompleted((prev) => {
-      const newCompleted = { ...prev, [id]: !prev[id] };
-      animateCarrots();
-      return newCompleted;
-    });
+    // now that habbit has been completed, we need to update the backend
+    fetch(`http://localhost:3000/habbits/complete/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Habbit completion response:', data);
+        if (data.habbit) {
+          setCompleted((prev) => {
+            const newCompleted = { ...prev, [id]: !prev[id] };
+            animateCarrots();
+            return newCompleted;
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating habbit:', error);
+      });
   };
 
   const carrotCount = Object.values(completed).filter(Boolean).length;
 
   const renderHabbit = ({ item }: { item: Habbit }) => {
     const isDone = completed[item.id] || false;
+
 
     return (
       <TouchableOpacity
