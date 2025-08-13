@@ -10,7 +10,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// Test connection and create table if not exists
+// Test connection and create table if does not exist
 interface QueryResultRow {
   now?: string;
 }
@@ -80,6 +80,12 @@ export async function getAllHabbits() {
   const query = `SELECT * FROM habbits;`;
   const result = await pool.query(query);
   return result.rows;
+}
+export async function completeHabbit(id: number) {
+  const query = `INSERT INTO habbit_completions (habbit_id) VALUES ($1) RETURNING *;`;
+  const values = [id];
+  const result = await pool.query(query, values);
+  return result.rows[0];
 }
 
 export default pool;
