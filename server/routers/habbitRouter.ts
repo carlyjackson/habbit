@@ -8,6 +8,7 @@ habbitRouter.post(
 
 habbitRouter.get('/', habbitController.getHabbits);
 habbitRouter.get('/today', habbitController.getHabbitCompletionsToday);
+habbitRouter.get('/:selectedHabbit/completions', habbitController.getSpecificHabbitCompletions);
 
 habbitRouter.post(
     '/complete/:id', habbitController.completeHabbit

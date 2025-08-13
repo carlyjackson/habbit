@@ -114,4 +114,14 @@ export async function getUncompletedHabbitsToday() {
   return result.rows;
 }
 
+export async function getSpecificHabbitCompletions(id: number) {
+  const query = `
+    SELECT *
+    FROM habbit_completions
+    WHERE habbit_id = $1;
+  `;
+  const result = await pool.query(query, [id]);
+  return result.rows;
+}
+
 export default pool;

@@ -6,7 +6,8 @@ import {
   deleteHabbit,
   completeHabbit,
   getCompletedHabbitsToday,
-  getUncompletedHabbitsToday,
+    getUncompletedHabbitsToday,
+  getSpecificHabbitCompletions
 } from '../models/habbitModel';
 
 const habbitController = {
@@ -76,7 +77,18 @@ const habbitController = {
       console.error('Error fetching habbit completion data:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+    },
+    getSpecificHabbitCompletions: async (req: Request, res: Response) => {
+      const { selectedHabbit } = req.params;
+      try {
+        const completions = await getSpecificHabbitCompletions(parseInt(selectedHabbit));
+        return res.status(200).json({ completions });
+      } catch (error) {
+        console.error('Error fetching specific habbit completions:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
   },
+
 };
 
 export default habbitController;
