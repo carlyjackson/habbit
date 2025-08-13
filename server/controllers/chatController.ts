@@ -17,7 +17,7 @@ const systemMessage: ChatCompletionMessageParam = {
 };
 
 const conversations: Record<string, ChatCompletionMessageParam[]> = {};
-const sessionEnded: Record<string, boolean> = {};
+
 
 const chatController = {
   sendMessage: async (req: Request, res: Response) => {
@@ -48,7 +48,6 @@ const chatController = {
         const parsed = JSON.parse(assistantReply);
         if (parsed && typeof parsed === 'object' && parsed.action) {
           const created = await createHabbit(parsed); // save to database
-          console.log(created); 
           return res.status(200).json({
             redirectToHabbitsList: true, // signal frontend to redirect
           });

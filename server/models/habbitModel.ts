@@ -75,7 +75,7 @@ export async function deleteHabbit(id: string) {
   return result.rows[0];
 }
 
-// get all habbits 
+// get all habbits
 export async function getAllHabbits() {
   const query = `SELECT * FROM habbits;`;
   const result = await pool.query(query);
@@ -86,6 +86,32 @@ export async function completeHabbit(id: number) {
   const values = [id];
   const result = await pool.query(query, values);
   return result.rows[0];
+}
+
+export async function getCompletedHabbitsToday() {
+  const query = `
+  SELECT h.*
+  FROM habbits h
+  JOIN habbit_completions c 
+  ON h.id = c.habbit_id
+  WHERE c.completed_at = CURRENT_DATE;
+  `;
+  const result = await pool.query(query);
+  return result.rows;
+}
+
+export async function getUncompletedHabbitsToday() {
+  const query = `
+    SELECT h.*
+    FROM habbits h
+    WHERE h.id NOT IN (
+    SELECT habbit_id
+    FROM habbit_completions
+    WHERE completed_at = CURRENT_DATE
+);
+  `;
+  const result = await pool.query(query);
+  return result.rows;
 }
 
 export default pool;
