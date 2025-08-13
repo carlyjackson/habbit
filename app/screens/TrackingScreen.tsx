@@ -55,9 +55,23 @@ export default function TrackingScreen() {
   useEffect(() => {
     const fetchHabbits = async () => {
       try {
-        const res = await fetch('http://localhost:3000/habbits');
+        const res = await fetch('http://localhost:3000/habbits/today');
         const data = await res.json();
-        setHabbits(data.habbits.sort((a: Habbit, b: Habbit) => a.id - b.id));
+        // add logic to mark completed habbits
+        const completedHabbits = data.completedHabbits.map((h: Habbit) => h.id);
+        const uncompletedHabbits = data.uncompletedHabbits.map((h: Habbit) => h.id);
+        const allHabbits = [...data.completedHabbits, ...data.uncompletedHabbits];
+        setHabbits(allHabbits);
+        setCompleted((prev) => {
+          const newCompleted = { ...prev };
+          completedHabbits.forEach((id: number) => {
+            newCompleted[id] = true;
+          });
+          uncompletedHabbits.forEach((id: number) => {
+            newCompleted[id] = false;
+          });
+          return newCompleted;
+        });
       } catch (e) {
         console.error('Error fetching habbits:', e);
       }
