@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import {createHabbit, getAllHabbits, deleteHabbit} from '../models/habbitModel';
+import {createHabbit, getAllHabbits, deleteHabbit, completeHabbit} from '../models/habbitModel';
 
 const habbitController = {
     createHabbit: async (req: Request, res: Response) => {
@@ -25,7 +25,6 @@ const habbitController = {
         try {
             // fetch data from the database
             const habbits = await getAllHabbits();
-            console.log("all habbits fetched:", habbits);
             return res.status(200).json({ habbits });
         } catch (error) {
             console.error("Error fetching habbits:", error);
@@ -48,6 +47,13 @@ const habbitController = {
         // call a method from habbitModel to delete the data
         await deleteHabbit(id);
         return res.status(200).json({ message: `Habbit with id ${id} deleted!` });
+    },
+    completeHabbit: async (req: Request, res: Response) => {
+        const { id } = req.params;
+        console.log(`Completing habbit with id: ${id}`);
+        const completedHabbit = await completeHabbit(parseInt(id));
+        console.log(completedHabbit); 
+        return res.status(200).json({ message: `Habbit with id ${id} completed!`, habbit: completedHabbit });
     }
 }
 
