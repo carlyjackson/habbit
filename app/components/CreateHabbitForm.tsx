@@ -8,8 +8,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function CreateHabbitForm({ onClose }: { onClose: () => void }) {
   const {
     control,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit, // wrapper for onSubmit - handles validation
+    formState: { errors }, // validation error messages for each field
   } = useForm({
     defaultValues: {
       habbitName: '',

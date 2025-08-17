@@ -18,7 +18,7 @@ export default function HabbitScreen() {
 
     useEffect(() => {
       fetchHabbits();
-    }, []);
+    }, [habbits]);
   
   const fetchHabbits = async () => {
         try {
